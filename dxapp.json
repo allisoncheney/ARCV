@@ -1,0 +1,142 @@
+{
+  "name": "new_viral_detection",
+  "title": "Viral read detection (fancy)",
+  "summary": "Counts reads from certain viruses in UCSF 500 panel",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "input_hg19_mapped_bam",
+      "label": "hg19 mapped bam file",
+      "class": "file",
+      "optional": false,
+      "patterns": ["*.bam", "*deduplicated.realign.bam"],
+      "help": ""
+    },
+    {
+      "name": "input_viral_reference_fasta",
+      "label": "BWA reference genome",
+      "class": "file",
+      "optional": false,
+      "patterns": ["*.fasta"],
+      "help": " "
+    },
+    {
+      "name": "input_viral_gene_bed",
+      "label": "bed file with gene annotations for refs",
+      "class": "file",
+      "optional": false,
+      "patterns": ["*.bed"],
+      "help": "A bed file with annotations for genes of interest in viral sequences found in the reference viral fasta. The reference name of the virus must match the headers in the reference fasta file used. The gene annotations are specific to each viral sequence."
+    },
+    {
+      "name": "bwa_advanced_options",
+      "group": "Advanced",
+      "label": "Advanced command line options for bwa mem",
+      "class": "string",
+      "optional": true,
+      "help": "Advanced command line options that will be supplied directly to the 'bwa mem' execution. WARNING: if provided, these advanced options will be used INSTEAD of the common options. Example: -L 10 -R @RG\\\\tID:foo\\\\tSM:bar"
+    },
+    {
+      "name": "mapq_filter",
+      "group": "Common",
+      "label": "Exclude reads with mapq score below this cutoff value",
+      "class": "string",
+      "optional": true,
+      "default": "10",
+      "help": "Exclude reads with mapq score below this cutoff value. In general, the higher a mapq score the more trustworthy it is. Values range from 0 to 60 for bwa mem alignments. Default is 10, which is fairly conservative. 30 would be fairly strict. A value of 0 means no filtering is applied."
+    },
+    {
+      "name": "count_cutoff",
+      "group": "Common",
+      "label": "Excludes a virus from the report if the number of reads mapped to it is below this value",
+      "class": "string",
+      "optional": true,
+      "default": "10",
+      "help": "Excludes a virus from the report if the number of reads mapped to it is below this cutoff. Default is 10. (For samples which are truly positive for a virus like HPV, we commonly see read counts in the hundreds to as high as 500,000.) A value of 1 means no filtering is applied."
+    }
+
+  ],
+  "outputSpec": [
+    {
+      "name": "mapped_viral_bam",
+      "label": "bam file mapped to viral references",
+      "class": "file",
+      "patterns": [
+        "*.bam"
+      ],
+      "help": ""
+    },
+    {
+      "name": "coverage_stats_tsv",
+      "label": "tsv file with viral coverage info",
+      "class": "file",
+      "patterns": [
+        "*.tsv"
+      ],
+      "help": ""
+    },
+    {
+      "name": "coverage_sorted_bed",
+      "label": "bed file with viral read coverage",
+      "class": "file",
+      "patterns": [
+        "*.bed"
+      ],
+      "help": ""
+    },
+    {
+      "name": "viral_gene_coverage_results_tsv",
+      "label": "tsv file with details of coverage of genes present in detected viral genomes",
+      "class": "file",
+      "patterns": [
+        "*.tsv"
+      ],
+      "help": ""
+    },
+    {
+      "name": "combined_annot_res_tsv",
+      "label": "tsv file with combined detailed output ",
+      "class": "file",
+      "patterns": [
+        "*.tsv"
+      ],
+      "help": ""
+    },
+    {
+      "name": "viral_geno_annot_res_tsv",
+      "label": "tsv file with summary of viral reads results",
+      "class": "file",
+      "patterns": [
+        "*.tsv"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 48
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/new_viral_detection.sh",
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0",
+    "execDepends": [
+      {"name": "samtools", "version": "1.10-3" },
+      {"name": "bedtools", "version": "2.27.1+dfsg-4ubuntu1" },
+      {"name": "bwa", "version": "0.7.17-4" }
+    ]
+  },
+  "regionalOptions": {
+    "aws:us-east-1": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_v2_x4"
+        }
+      }
+    }
+  }
+}
