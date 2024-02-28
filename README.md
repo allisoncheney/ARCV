@@ -6,9 +6,7 @@ Counts reads from certain viruses in UCSF 500 panel
 This is the source code for an app that runs on the DNAnexus Platform.
 For more information about how to run or modify it, see
 https://documentation.dnanexus.com/.
-<!-- /dx-header -->
 
-<!--
 What does this app do?
 This app maps paired reads from a BAM file to viral reference genomes and gives statistics on output.
 
