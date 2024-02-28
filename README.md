@@ -23,6 +23,7 @@ The reference genome doesn't contain any bacterial genomes.
 The bed file with gene annotations is specific for each viral sequence in the fasta file. If you decide to use a different viral sequence in the fasta, you will have to change the gene bed file.
 If the reference genome is changed, when selecting sequences please note that many GenBank sequences are of poor quality or are contaminated.
 
+
 What does this app output?
 Outputs the following files:
 1. BAM file mapped to reference viral genome.
@@ -78,5 +79,26 @@ https://docs.google.com/spreadsheets/d/1bHP7e3b9mpkxZI8CqQdLP5WyupDgDnwyNUp5exz5
 Because there are multiple sequences in GenBank for each viral species, the percent identity of a species to a probe varies with the sequence. The min_ident column contains the % identity for the sequence with the lowest % identity of all the sequences for that virus species. Please note that the quality of sequences in GenBank varies widely and most sequences are not validated.
 
 
+## Running this app with additional computational resources
+
+This app has the following entry points:
+
+* main
+
+When running this app, you can override the instance type to be used by
+providing the ``systemRequirements`` field to ```/applet-XXXX/run``` or
+```/app-XXXX/run```, as follows:
+
+    {
+      systemRequirements: {
+        "main": {"instanceType": "mem2_hdd2_x2"}
+      },
+      [...]
+    }
+
+See <a
+href="https://documentation.dnanexus.com/developer/api/running-analyses/io-and-run-specifications#run-specification">Run
+Specification</a> in the API documentation for more information about the
+available instance types.
 
 -->
