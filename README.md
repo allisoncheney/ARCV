@@ -72,9 +72,6 @@ Description of probe set
 There are 1069 viral probes in the current set. Each probe is 60 bp long.
 The current probe set in the UCSF500 panel was designed by the lab of Charles Chiu. “I designed the probes using the MSSPE algorithm was developed in my laboratory (https://www.nature.com/articles/s41564-019-0637-9). They were not designed to be specific for individual viral species but were designed as highly conserved probes to broadly capture as many divergent viral sequences as possible. The annotation on the probes means that the probe sequences was derived from the HPV16 or HPV18 genome, for instance, but does not mean that the probe sequences are specific for that viral genome. The specificity should be provided by the sequence that is recovered.”
 
-Using blast, I have made a table showing what viral species, if any, the probes map to. These
-were run against any viral sequence in GenBank.
-https://docs.google.com/spreadsheets/d/1bHP7e3b9mpkxZI8CqQdLP5WyupDgDnwyNUp5exz5rLk/edit?usp=sharing
 
 Because there are multiple sequences in GenBank for each viral species, the percent identity of a species to a probe varies with the sequence. The min_ident column contains the % identity for the sequence with the lowest % identity of all the sequences for that virus species. Please note that the quality of sequences in GenBank varies widely and most sequences are not validated.
 
